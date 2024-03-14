@@ -5,7 +5,7 @@ module.exports = {
   conf: {
     aliases: ['instagram','insta'],
     name: 'instagram',
-    help: '',
+    help: 'instagram Stalk yaparsınız.',
     enabled: true,
     slash: false, // Prefix ile kullanılacak
   },

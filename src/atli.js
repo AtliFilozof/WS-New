@@ -1,4 +1,4 @@
-const { Client, Collection, Intents } = require("discord.js");
+const { Client, Collection, Intents, MessageEmbed } = require("discord.js");
 const cron = require('node-cron');
 const adminUserIds = ['981501891030700082', '816266228792295447']; // Geri verebilecek kişilerin Discord kullanıcı ID'leri
 const targetChannelId = '1201297338442989721';
@@ -29,6 +29,88 @@ client.on("ready", () => {
 	require("./util/helpers/commandHandler");
 	require("./util/util")(client);
 });
+
+// var stl = "1214725876533428335"
+// client.on("messageReactionAdd", async event => {
+//   var starchan = client.channels.cache.get(stl)
+//     if (event.emoji.name !== "⭐") return
+//     var chan = client.channels.cache.get(event.message.channel.id)
+//     var msg = await chan.messages.fetch(event.message.id)
+//     var rs = msg.reactions.cache.get("⭐").users.cache.size
+//     if (rs > 1) {
+//       var embed = {
+//       embed.setAuthor(msg.author.tag, msg.author.avatarURL())
+//       embed.setTitle(`Yıldızlanan Mesaj!`)
+//       embed.setURL(`https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id}`)
+//       embed.addField("Kanal: ", chan, true)
+//       embed.addField("Mesaj sahibi: ", msg.author.tag, true)
+//       embed.setColor("GOLD")
+//       embed.setThumbnail(msg.author.avatarURL())
+//       embed.setTimestamp()
+//       embed.addField("**Mesaja git:** ", `[Zıpla](https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id})`)
+
+//       if (msg.content) {
+//         embed.addField("Mesaj:", msg.content, true)
+//       }
+//       if (msg.attachments.size > 0) {
+//         embed.setImage(msg.attachments.first().url)
+//       }
+
+//       embed.setFooter(`⭐ ${rs} | ${msg.author.id}`)
+
+//       if (global.confdb.get(`star.${msg.id}`) === true) {
+//         var msj = await starchan.messages.fetch(global.confdb.get(`star.${msg.id}`))
+//         msj.edit(embed)
+//       } else {
+//         starchan.send(embed).then(mesaj => {
+//           global.confdb.set(`star.${msg.id}`, mesaj.id)
+//         });
+//       }
+//     }
+
+//     }
+// })
+
+
+// client.on("messageReactionRemove", async event => {
+//   var starchan = client.channels.cache.get(stl)
+//     if (event.emoji.name !== "⭐") return;
+//     var chan = client.channels.cache.get(event.message.channel.id)
+//     var msg = await chan.messages.fetch(event.message.id)
+//     if (!global.confdb.get(`star.${msg.id}`)) return
+//     var lmsg = await starchan.messages.fetch(global.confdb.get(`star.${msg.id}`))
+//     var rs = msg.reactions.cache.get("⭐").users.cache.size || 0
+
+//     if (rs > 1) {
+//       var embed = new MessageEmbed
+//       embed.setAuthor(msg.author.tag, msg.author.avatarURL())
+//       embed.setTitle(`Yıldızlanan Mesaj!`)
+//       embed.setURL(`https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id}`)
+//       embed.addField("Kanal: ", chan, true)
+//       embed.addField("Mesaj sahibi: ", msg.author.tag, true)
+//       embed.setColor("GOLD");
+//       embed.setThumbnail(msg.author.avatarURL())
+//       embed.setTimestamp()
+//       embed.addField("**Mesaja git:** ", `[Zıpla](https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id})`)
+//       if (msg.content) {
+//         embed.addField("Mesaj:", msg.content, true)
+//       }
+//       if (msg.attachments.size > 0) {
+//         embed.setImage(msg.attachments.first().url)
+//       }
+
+//       embed.setFooter(`⭐ ${rs} | ${msg.author.id}`)
+
+//       if (global.confdb.get(`star.${msg.id}`) === true) {
+//         lmsg.edit(embed)
+//       }
+//     } else {
+//       global.confdb.delete(`star.${msg.id}`)
+//       lmsg.delete({timeout:100})
+//     }
+// })
+
+
 
 client.on('message', async (message) => {
 	if (message.content === '!reboot') {
@@ -156,97 +238,97 @@ if (küfürler.some(küfür => message.content.toLowerCase().includes(küfür)))
 
 //     await interaction.reply({ content: 'Rollerin güncellendi!', ephemeral: true });
 // });
-const { MessageAttachment } = require('discord.js'); // MessageAttachment'ı doğrudan almak için bu satırı ekledik
+// const { MessageAttachment } = require('discord.js'); // MessageAttachment'ı doğrudan almak için bu satırı ekledik
 
-const starboardChannelId = '1214725876533428335'; // Starboard kanalının ID'sini buraya ekleyin
-const starboardImageURL = 'https://cdn.discordapp.com/attachments/1193525487226593300/1214729660752203796/dash_20240305_173757.png?ex=65fa2c27&is=65e7b727&hm=011cb998ef1de7464853e580a673f896f7c42946baee1b2a53611d880c996dc4'; // Starboard embedlerinde kullanılacak fotoğraf URL'si
+// const starboardChannelId = '1214725876533428335'; // Starboard kanalının ID'sini buraya ekleyin
+// const starboardImageURL = 'https://cdn.discordapp.com/attachments/1193525487226593300/1214729660752203796/dash_20240305_173757.png?ex=65fa2c27&is=65e7b727&hm=011cb998ef1de7464853e580a673f896f7c42946baee1b2a53611d880c996dc4'; // Starboard embedlerinde kullanılacak fotoğraf URL'si
 
-client.on('messageReactionAdd', async (reaction, user) => {
-  // Yıldız emojisine (⭐) basıldığında işlem yap
-  if (reaction.emoji.name === '⭐' && !user.bot) {
-    const message = reaction.message;
+// client.on('messageReactionAdd', async (reaction, user) => {
+//   // Yıldız emojisine (⭐) basıldığında işlem yap
+//   if (reaction.emoji.name === '⭐' && !user.bot) {
+//     const message = reaction.message;
 
-    // Starboard kanalını al
-    const starboardChannel = message.guild.channels.cache.get(starboardChannelId);
+//     // Starboard kanalını al
+//     const starboardChannel = message.guild.channels.cache.get(starboardChannelId);
 
-    // Yıldızlanan mesajı starboard'a gönder
-    if (starboardChannel) {
-      const files = message.attachments.map(attachment => new MessageAttachment(attachment.url));
-      const embed = {
-        color: 0xFFD700, // Altın rengi (isteğe bağlı)
-        author: {
-          name: message.author.username,
-          icon_url: message.author.displayAvatarURL({ dynamic: true }),
-        },
-        description: message.content,
-        fields: [
-          {
-            name: 'ㅤ',
-            value: `ㅤ`,
-          },
-          {
-            name: 'ㅤ',
-            value: `[Mesaja gitmek için tıkla](${message.url})`,
-          },
-        ],
-        timestamp: new Date(),
-        footer: {
-          text: `#${message.channel.name}`,
-          url: message.url
-        },
-        thumbnail: {
-          url: starboardImageURL,
-        },
-      };
+//     // Yıldızlanan mesajı starboard'a gönder
+//     if (starboardChannel) {
+//       const files = message.attachments.map(attachment => new MessageAttachment(attachment.url));
+//       const embed = {
+//         color: 0xFFD700, // Altın rengi (isteğe bağlı)
+//         author: {
+//           name: message.author.username,
+//           icon_url: message.author.displayAvatarURL({ dynamic: true }),
+//         },
+//         description: message.content,
+//         fields: [
+//           {
+//             name: 'ㅤ',
+//             value: `ㅤ`,
+//           },
+//           {
+//             name: 'ㅤ',
+//             value: `[Mesaja gitmek için tıkla](${message.url})`,
+//           },
+//         ],
+//         timestamp: new Date(),
+//         footer: {
+//           text: `#${message.channel.name}`,
+//           url: message.url
+//         },
+//         thumbnail: {
+//           url: starboardImageURL,
+//         },
+//       };
 
-      // Eğer mesajda ekli dosya varsa, embed'e ekle
-      if (files.length > 0) {
-        embed.files = files;
-      }
+//       // Eğer mesajda ekli dosya varsa, embed'e ekle
+//       if (files.length > 0) {
+//         embed.files = files;
+//       }
 
-      await starboardChannel.send({ embeds: [embed] });
-    }
-  }
-});
-
-
-const canvacord = require("canvacord");
-
-client.on('messageCreate', async message => {
-  // Kanalın ID'sini belirtin
-  const targetChannelId = '1193525487226593300'; // Kanal_ID kısmını kendi kanalınızın ID'siyle değiştirin
-
-  // Sadece belirli kanalda çalışmasını sağlayın
-  if (message.channel.id !== targetChannelId) {
-    return;
-  }
-
-  // Belirtilen yüzde 5 olasılıkla kontrol
-  if (Math.random() <= 0.5) {
-    try {
-      const member = message.author;
-      let avatar = member.displayAvatarURL({
-        dynamic: false,
-        format: "png",
-      });
-
-      const embed = {
-        description: ('Loading..'),
-        timestamp: new Date(),
+//       await starboardChannel.send({ embeds: [embed] });
+//     }
+//   }
+// });
 
 
-      }
-      let messages = await message.channel.send(embed);
+// const canvacord = require("canvacord");
 
-      let image = await canvacord.Canvas.trigger(avatar);
-      let attachment = new Discord.MessageAttachment(image, "triggered.gif");
-      return message.channel.send({ files: [attachment] }).then(messages.delete());
-    } catch (error) {
-      console.error('Trigger efekti hatası:', error);
-      message.channel.send('Bir hata oluştu. Lütfen tekrar deneyin.');
-    }
-  }
-});
+// client.on('messageCreate', async message => {
+//   // Kanalın ID'sini belirtin
+//   const targetChannelId = '1193525487226593300'; // Kanal_ID kısmını kendi kanalınızın ID'siyle değiştirin
+
+//   // Sadece belirli kanalda çalışmasını sağlayın
+//   if (message.channel.id !== targetChannelId) {
+//     return;
+//   }
+
+//   // Belirtilen yüzde 5 olasılıkla kontrol
+//   if (Math.random() <= 0.5) {
+//     try {
+//       const member = message.author;
+//       let avatar = member.displayAvatarURL({
+//         dynamic: false,
+//         format: "png",
+//       });
+
+//       const embed = {
+//         description: ('Loading..'),
+//         timestamp: new Date(),
+
+
+//       }
+//       let messages = await message.channel.send(embed);
+
+//       let image = await canvacord.Canvas.trigger(avatar);
+//       let attachment = new Discord.MessageAttachment(image, "triggered.gif");
+//       return message.channel.send({ files: [attachment] }).then(messages.delete());
+//     } catch (error) {
+//       console.error('Trigger efekti hatası:', error);
+//       message.channel.send('Bir hata oluştu. Lütfen tekrar deneyin.');
+//     }
+//   }
+// });
 
 
 client

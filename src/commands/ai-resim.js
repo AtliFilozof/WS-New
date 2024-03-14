@@ -1,6 +1,10 @@
 const { Hercai } = require('hercai');
 const herc = new Hercai();
 
+// Yasaklı kelimeler listesi
+const yasakliKelimeler = ['Allah var mı', 'Sikeyim', 'Göt' , 'yarrak' , 'am' , 'sikim', 'sik', 'yarrak', 'porno', 'fuck', 'ass' , 'dick' , 'porn', 'hentai', 'nude', 'çıplak', 'sex' , 'seks' , 'boob' , 'horny' ];
+
+
 module.exports = {
   conf: {
     aliases: ["çiz", "resim"],
@@ -11,13 +15,15 @@ module.exports = {
   },
 
   run: async ({ client, message, args }) => {
-
-    /* Available Models */
-    /* "v1" , "v2" , "v2-beta" , "v3" (DALL-E) , "lexica" , "prodia", "simurg", "animefy", "raava", "shonin" */
-
     const prompt = args.join(" "); // Kullanıcının girdiği tüm argümanları birleştir
     // START MESSAGE TYPING
     message.channel.sendTyping()
+
+    // Yasaklı kelimeler kontrolü
+    if (yasakliKelimeler.some(kelime => prompt.toLowerCase().includes(kelime.toLowerCase()))) {
+      message.reply('Bu kelimenin kullanımı yasaktır.');
+      return;
+    }
 
     herc.drawImage({ model: "shonin", prompt: prompt, negative_prompt: "" }).then(response => {
       message.reply({ content: `${response.url}` });
